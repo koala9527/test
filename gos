@@ -1,0 +1,6 @@
+<button class="btn copy-btns" data-clipboard-action="copy" data-clipboard-target="#fo1" onclick="WX_btn();">点击打开微信粘贴</button>
+<script>
+    function WX_btn(){
+        window.location.href="weixin://";
+    }
+</script>
