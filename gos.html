@@ -1,5 +1,17 @@
 <button class="btn copy-btns" data-clipboard-action="copy" data-clipboard-target="#fo1" onclick="WX_btn();">点击打开微信粘贴</button>
 <script>
+var auto_jump=0;
+if(/baiduboxapp/i.test(navigator.userAgent)){
+ 	if(auto_jump == 1){
+	 	window.location.href="bdbox://utils?action=sendIntent&minver=7.4&params=%7B%22intent%22%3A%22weixin%3A%2F%2F%23Intent%3Bend%22%7D";
+	}
+}else{
+ 	if(auto_jump == 1){
+		window.location.href="weixin://";
+	}
+}
+</script>
+<script>
     function WX_btn(){
         window.location.href="weixin://";
     }
