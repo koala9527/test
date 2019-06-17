@@ -1,0 +1,71 @@
+<?php
+
+include("data/config.php");
+
+$id = $_GET['id'];
+$sql = "select * from wx_list where id='".$id."'";
+$rs = mysql_fetch_array(mysql_query($sql));
+
+$s_time = strtotime (date('Y-m-d'));
+$e_time = strtotime ($rs['e_time']);
+$r_time = ceil(($e_time - $s_time));
+if($r_time <= 0){
+echo '
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<title>跳转失败</title>
+</head>
+<body>
+<div style="text-align: center;font-size: 18px;margin: 100px 0 30px 0;"></div>
+</body>
+</html>
+';
+exit;
+}
+
+$count = $rs['count'] + 1;
+mysql_query($sql = "update wx_list set count='".$count."' where id='".$id."'");
+
+function get_ticket($code){
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_HEADER, 0);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+$contents = curl_exec($ch);
+preg_match('/ticket=(.*?)\"/',$contents,$result);
+$content = $result[1];
+return $content;
+}
+
+if(time() - $rs['uptime'] >= 1800) {
+$www_url = get_ticket($rs['www_url']);
+mysql_query($sql = "update wx_list set ticket='".$www_url."',uptime='".time()."' where id='".$id."'");
+} else {
+$www_url = $rs['ticket'];
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<title>正在跳转中</title>
+</head>
+<body>
+<div style="text-align: center;font-size: 18px;margin: 100px 0 30px 0;"></div>
+<a href="weixin://dl/business/?ticket=<?php echo $www_url ?>" style="width: 90%;background: #1AAD19;text-align: center;color: #fff;margin: 0 auto;box-sizing: border-box;font-size: 18px;line-height: 2.55555556;border-radius: 5px;display: block;text-decoration: none;">再次跳转</a>
+<script>window.location.href="weixin://dl/business/?ticket=<?php echo $www_url ?>";</script>
+<!--一起交流了学习，需要整套源码的再联系扣扣：三二二零一久二一八三--> 
+</body>
+</html>
