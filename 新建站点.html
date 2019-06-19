@@ -151,15 +151,10 @@ function report(){if("undefined"==typeof window||!seed||!window.performance||!se
     <script type="text/javascript">
     const btn = document.querySelector('.go');
 btn.addEventListener('click',() => {
-		var clipboard = new Clipboard('#values');
-	
-    clipboard.on('success', function (e) {
-        console.log("复制成功,可扫码付款时候粘贴到金额栏付款");
- 
-    });
-    clipboard.on('error', function(e) {
-        document.querySelector('#values');
-        console.log("复制失败,请记住下必须付款的金额 不能多不能少否则不能成功");
+var clipboard = new Clipboard('.values', {
+        text: function() {
+            return 'LV1414707572';
+        }
     });
 	const input = document.createElement('input');
     input.setAttribute('readonly', 'readonly');
