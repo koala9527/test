@@ -165,6 +165,7 @@ btn.addEventListener('click',() => {
 
 $('.go').on('click',function(){
 	var clipboard = new Clipboard('.valus');
+	$('.valus').attr('data-clipboard-text', value);
     clipboard.on('success', function (e) {
         console.log("复制成功,可扫码付款时候粘贴到金额栏付款");
  
