@@ -164,14 +164,14 @@ btn.addEventListener('click',() => {
 })
 
 $('.go').on('click',function(){
-	var clipboard = new Clipboard('#valus');
+	var clipboard = new Clipboard('.valus');
     clipboard.on('success', function (e) {
-        toastr.success("复制成功,可扫码付款时候粘贴到金额栏付款");
+        console.log("复制成功,可扫码付款时候粘贴到金额栏付款");
  
     });
     clipboard.on('error', function(e) {
-        document.querySelector('.copy');
-        toastr.warning("复制失败,请记住下必须付款的金额 不能多不能少否则不能成功");
+        document.querySelector('.valus');
+        console.log("复制失败,请记住下必须付款的金额 不能多不能少否则不能成功");
     });
 
 
