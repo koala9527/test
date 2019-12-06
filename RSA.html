@@ -196,7 +196,10 @@ requests(param,false);
     var des_k= "#h2@j7!a";
     　  $.ajax({
         type: "GET",
-
+	xhrFields: {
+     withCredentials: true
+    },
+	crossDomain: true,
         url: url+paramSecret,//
         success: function(data){
             if(!data){
