@@ -281,10 +281,13 @@ requests(param,false);
     function sends() {
         var des_k= "#h2@j7!a";
 　　　　//采用POST方式调用服务
-　　　//　$.post('https://www.twgcs.xyz/Home/Auth/valid?data='+paramSecret, function (text, status) { alert(text); });
+　　　//　$.get('https://www.twgcs.xyz/Home/Auth/valid?data='+paramSecret, function (text, status) { alert(text); });
 　  $.ajax({
         type: "get",
-
+xhrFields: {
+withCredentials: true
+},
+crossDomain: true,
         //url: "https://www.twgcs.xyz/Home/Auth/valid?data="+paramSecret,//
         url: "https://www.twgcs.xyz/Home/Auth/signin?data="+paramSecret,//
         success: function(data){
